@@ -37,7 +37,7 @@ class _DSAScreenState extends ConsumerState<DSAScreen> with SingleTickerProvider
     super.dispose();
   }
 
-  void _openAddProblemDialog({DSAProblemModel? preset}) {
+  void _openAddProblemDialog() {
     showDialog(
       context: context,
       builder: (context) => AddProblemDialog(

@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/widgets/app_button.dart';
-import '../../../core/widgets/app_card.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});

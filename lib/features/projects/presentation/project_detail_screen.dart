@@ -120,17 +120,6 @@ class _ProjectDetailScreenState extends ConsumerState<ProjectDetailScreen> {
     }
   }
 
-  Future<void> _startProject() async {
-    final repo = ref.read(projectRepositoryProvider);
-    await repo.startOrSaveProject(projectId: widget.projectId, status: 'in_progress');
-    ref.invalidate(userProjectsProvider);
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Project added to your active learning list!')),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

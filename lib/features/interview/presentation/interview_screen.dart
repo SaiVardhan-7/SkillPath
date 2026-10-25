@@ -4,7 +4,6 @@ import '../../../app/theme/app_colors.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/difficulty_badge.dart';
-import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/error_view.dart';
 import '../../../core/widgets/loading_indicator.dart';
 import '../models/interview_model.dart';

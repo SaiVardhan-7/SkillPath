@@ -25,7 +25,7 @@ final _shellNavigatorProjectsKey = GlobalKey<NavigatorState>();
 final _shellNavigatorProfileKey = GlobalKey<NavigatorState>();
 
 final appRouterProvider = Provider<GoRouter>((ref) {
-  final authNotifier = ref.watch(authNotifierProvider);
+  ref.watch(authNotifierProvider);
 
   return GoRouter(
     navigatorKey: _rootNavigatorKey,

@@ -7,7 +7,11 @@ class ApiConstants {
     defaultValue: 'http://localhost:5000/api',
   );
 
-  static String get baseUrl => _baseUrl;
+  static String get baseUrl {
+    final trimmed = _baseUrl.trim();
+    final url = trimmed.isNotEmpty ? trimmed : 'http://localhost:5000/api';
+    return url.endsWith('/') ? url.substring(0, url.length - 1) : url;
+  }
 
   // Auth endpoints
   static const String register = '/auth/register';

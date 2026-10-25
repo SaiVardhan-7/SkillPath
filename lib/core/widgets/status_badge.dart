@@ -15,7 +15,7 @@ class StatusBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     Color bg;
     Color fg;
-    IconData? icon;
+    IconData icon;
     String label = customLabel ?? '';
 
     switch (status.toLowerCase()) {
@@ -68,10 +68,8 @@ class StatusBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (icon != null) ...[
-            Icon(icon, size: 12, color: fg),
-            const SizedBox(width: 4),
-          ],
+          Icon(icon, size: 12, color: fg),
+          const SizedBox(width: 4),
           Text(
             label,
             style: TextStyle(
