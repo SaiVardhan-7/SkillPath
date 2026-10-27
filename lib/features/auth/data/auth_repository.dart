@@ -71,12 +71,12 @@ class AuthRepository {
     final response = await apiClient.put(
       ApiConstants.profile,
       data: {
-        ? 'name': name,
-        ? 'targetRole': targetRole,
-        ? 'currentSkillLevel': currentSkillLevel,
-        ? 'dailyStudyTimeMinutes': dailyStudyTimeMinutes,
-        ? 'learningGoals': learningGoals,
-        ? 'isOnboarded': isOnboarded,
+        if (name != null) 'name': name,
+        if (targetRole != null) 'targetRole': targetRole,
+        if (currentSkillLevel != null) 'currentSkillLevel': currentSkillLevel,
+        if (dailyStudyTimeMinutes != null) 'dailyStudyTimeMinutes': dailyStudyTimeMinutes,
+        if (learningGoals != null) 'learningGoals': learningGoals,
+        if (isOnboarded != null) 'isOnboarded': isOnboarded,
       },
     );
 

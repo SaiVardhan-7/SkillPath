@@ -64,7 +64,7 @@ class DSARepository {
     final response = await apiClient.post(
       ApiConstants.userProblems,
       data: {
-        ? 'problemId': problemId,
+        if (problemId != null) 'problemId': problemId,
         'title': title,
         'url': url,
         'platform': platform,
@@ -93,12 +93,12 @@ class DSARepository {
     final response = await apiClient.put(
       '${ApiConstants.userProblems}/$id',
       data: {
-        ? 'status': status,
-        ? 'isBookmarked': isBookmarked,
-        ? 'notes': notes,
-        ? 'mistakes': mistakes,
-        ? 'observations': observations,
-        ? 'rescheduleDays': rescheduleDays,
+        if (status != null) 'status': status,
+        if (isBookmarked != null) 'isBookmarked': isBookmarked,
+        if (notes != null) 'notes': notes,
+        if (mistakes != null) 'mistakes': mistakes,
+        if (observations != null) 'observations': observations,
+        if (rescheduleDays != null) 'rescheduleDays': rescheduleDays,
       },
     );
     return DSAProblemModel.fromJson(response['data']);

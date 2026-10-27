@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:skillpath/app/router.dart';
 import 'package:skillpath/core/constants/api_constants.dart';
 import 'package:skillpath/core/widgets/app_button.dart';
 import 'package:skillpath/core/widgets/difficulty_badge.dart';
