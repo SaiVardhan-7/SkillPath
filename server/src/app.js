@@ -13,16 +13,42 @@ const interviewRoutes = require('./routes/interviewRoutes');
 const app = express();
 
 // Middleware
-const allowedOrigins = (process.env.CORS_ORIGIN || '')
+const envOrigins = (process.env.CORS_ORIGIN || '')
   .split(',')
-  .map((o) => o.trim())
+  .map((o) => o.trim().replace(/\/+$/, ''))
   .filter(Boolean);
 
-app.use(cors({
-  origin: allowedOrigins.length ? allowedOrigins : '*',
+const defaultOrigins = [
+  'https://saivardhan-7.github.io',
+  'http://localhost:3000',
+  'http://localhost:4200',
+  'http://localhost:5000',
+  'http://localhost:8080'
+];
+
+const allowedOrigins = Array.from(new Set([...defaultOrigins, ...envOrigins]));
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    const normalized = origin.replace(/\/+$/, '');
+    if (
+      allowedOrigins.includes(normalized) ||
+      allowedOrigins.includes('*') ||
+      /^http:\/\/localhost(:\d+)?$/.test(normalized) ||
+      /^http:\/\/127\.0\.0\.1(:\d+)?$/.test(normalized)
+    ) {
+      return callback(null, true);
+    }
+    return callback(new Error(`CORS origin not allowed: ${origin}`));
+  },
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With']
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 app.use(express.json());
 
@@ -30,14 +56,34 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'));
 }
 
-// Health Check
-app.get('/api/health', (req, res) => {
+// Root Service Info
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    name: 'SkillPath Backend API',
+    version: '1.0.0',
+    timestamp: new Date().toISOString(),
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth',
+      roadmaps: '/api/roadmaps',
+      problems: '/api/problems',
+      projects: '/api/projects'
+    }
+  });
+});
+
+// Health Checks
+const healthHandler = (req, res) => {
   res.status(200).json({
     status: 'ok',
     message: 'SkillPath Backend API is operational',
     timestamp: new Date().toISOString()
   });
-});
+};
+
+app.get('/health', healthHandler);
+app.get('/api/health', healthHandler);
 
 // API Routes
 app.use('/api/auth', authRoutes);

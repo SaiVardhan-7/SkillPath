@@ -55,9 +55,9 @@ class InterviewRepository {
     await apiClient.put(
       '${ApiConstants.interviewProgress}/$questionId',
       data: {
-        if (isPracticed != null) 'isPracticed': isPracticed,
-        if (isBookmarked != null) 'isBookmarked': isBookmarked,
-        if (userNotes != null) 'userNotes': userNotes,
+        ? 'isPracticed': isPracticed,
+        ? 'isBookmarked': isBookmarked,
+        ? 'userNotes': userNotes,
       },
     );
   }

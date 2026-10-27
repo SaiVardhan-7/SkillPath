@@ -11,6 +11,7 @@ final roadmapRepositoryProvider = Provider<RoadmapRepository>((ref) {
 class SelectedRoadmapIdNotifier extends Notifier<String?> {
   @override
   String? build() => null;
+  @override
   set state(String? val) => super.state = val;
   void set(String? val) => state = val;
 }

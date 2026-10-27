@@ -158,12 +158,6 @@ class _ProblemCardState extends State<ProblemCard> {
                   // Reschedule Popup Menu
                   PopupMenuButton<int>(
                     tooltip: 'Reschedule revision',
-                    child: const Row(
-                      children: [
-                        Text('Reschedule', style: TextStyle(fontSize: 11, color: AppColors.primary, fontWeight: FontWeight.w600)),
-                        Icon(Icons.arrow_drop_down_rounded, size: 16, color: AppColors.primary),
-                      ],
-                    ),
                     itemBuilder: (context) => [
                       const PopupMenuItem(value: 3, child: Text('In 3 Days')),
                       const PopupMenuItem(value: 7, child: Text('In 7 Days')),
@@ -171,6 +165,12 @@ class _ProblemCardState extends State<ProblemCard> {
                       const PopupMenuItem(value: 30, child: Text('In 30 Days')),
                     ],
                     onSelected: widget.onRescheduled,
+                    child: const Row(
+                      children: [
+                        Text('Reschedule', style: TextStyle(fontSize: 11, color: AppColors.primary, fontWeight: FontWeight.w600)),
+                        Icon(Icons.arrow_drop_down_rounded, size: 16, color: AppColors.primary),
+                      ],
+                    ),
                   ),
                 ],
               ),

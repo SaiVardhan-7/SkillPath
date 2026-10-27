@@ -24,12 +24,88 @@ final _shellNavigatorDSAKey = GlobalKey<NavigatorState>();
 final _shellNavigatorProjectsKey = GlobalKey<NavigatorState>();
 final _shellNavigatorProfileKey = GlobalKey<NavigatorState>();
 
+class RouterNotifier extends ChangeNotifier {
+  final Ref _ref;
+  bool _isDisposed = false;
+
+  RouterNotifier(this._ref) {
+    _ref.listen<AuthState>(
+      authNotifierProvider,
+      (previous, next) {
+        if (_isDisposed) return;
+        if (previous?.status != next.status ||
+            previous?.user?.isOnboarded != next.user?.isOnboarded ||
+            previous?.user?.id != next.user?.id) {
+          notifyListeners();
+        }
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _isDisposed = true;
+    super.dispose();
+  }
+
+  String? redirect(BuildContext context, GoRouterState state) {
+    final authState = _ref.read(authNotifierProvider);
+    final status = authState.status;
+    final isAuth = authState.isAuthenticated;
+    final isOnboarded = authState.user?.isOnboarded == true;
+
+    final location = state.uri.path;
+    final isSplash = location == '/splash';
+    final isAuthRoute = location == '/welcome' ||
+        location == '/login' ||
+        location == '/register' ||
+        location == '/forgot-password';
+
+    // 1. Initial app launch / auth check in progress
+    if (status == AuthStatus.initial || (status == AuthStatus.loading && authState.user == null)) {
+      return isSplash ? null : '/splash';
+    }
+
+    // 2. Unauthenticated user
+    if (!isAuth) {
+      if (isAuthRoute) {
+        return null;
+      }
+      return '/welcome';
+    }
+
+    // 3. Authenticated user but not onboarded yet
+    if (!isOnboarded) {
+      if (location == '/onboarding') {
+        return null;
+      }
+      return '/onboarding';
+    }
+
+    // 4. Authenticated & Onboarded user
+    if (isSplash || isAuthRoute || location == '/onboarding') {
+      return '/dashboard';
+    }
+
+    // Allow user to proceed to destination
+    return null;
+  }
+}
+
+final routerNotifierProvider = Provider<RouterNotifier>((ref) {
+  final notifier = RouterNotifier(ref);
+  ref.onDispose(notifier.dispose);
+  return notifier;
+});
+
 final appRouterProvider = Provider<GoRouter>((ref) {
-  ref.watch(authNotifierProvider);
+  final notifier = ref.watch(routerNotifierProvider);
 
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: '/splash',
+    refreshListenable: notifier,
+    redirect: notifier.redirect,
     routes: [
       GoRoute(
         path: '/splash',

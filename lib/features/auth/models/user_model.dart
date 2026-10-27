@@ -66,4 +66,28 @@ class UserModel {
       isOnboarded: isOnboarded ?? this.isOnboarded,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is UserModel &&
+        other.id == id &&
+        other.name == name &&
+        other.email == email &&
+        other.targetRole == targetRole &&
+        other.currentSkillLevel == currentSkillLevel &&
+        other.dailyStudyTimeMinutes == dailyStudyTimeMinutes &&
+        other.isOnboarded == isOnboarded;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+        id,
+        name,
+        email,
+        targetRole,
+        currentSkillLevel,
+        dailyStudyTimeMinutes,
+        isOnboarded,
+      );
 }

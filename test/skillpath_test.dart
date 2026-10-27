@@ -1,14 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:skillpath/app/router.dart';
+import 'package:skillpath/core/constants/api_constants.dart';
 import 'package:skillpath/core/widgets/app_button.dart';
 import 'package:skillpath/core/widgets/difficulty_badge.dart';
 import 'package:skillpath/core/widgets/status_badge.dart';
 import 'package:skillpath/features/auth/models/user_model.dart';
+import 'package:skillpath/features/auth/providers/auth_provider.dart';
 import 'package:skillpath/features/dsa/models/dsa_problem_model.dart';
 import 'package:skillpath/features/projects/models/project_model.dart';
 import 'package:skillpath/features/roadmaps/models/roadmap_model.dart';
 
 void main() {
+  group('ApiConstants Tests', () {
+    test('ApiConstants.baseUrl is valid and does not have a trailing slash', () {
+      final url = ApiConstants.baseUrl;
+      expect(url.isNotEmpty, true);
+      expect(url.startsWith('http://') || url.startsWith('https://'), true);
+      expect(url.endsWith('/'), false);
+      expect(url.endsWith('/api'), true);
+    });
+  });
+
+  group('AuthState & UserModel Equality Tests', () {
+    test('Identical AuthState instances are value-equal', () {
+      const s1 = AuthState(status: AuthStatus.unauthenticated);
+      const s2 = AuthState(status: AuthStatus.unauthenticated);
+      expect(s1, equals(s2));
+      expect(s1.hashCode, equals(s2.hashCode));
+    });
+
+    test('Identical UserModel instances are value-equal', () {
+      final u1 = UserModel(
+        id: '123',
+        name: 'Alex',
+        email: 'alex@dev.com',
+        targetRole: 'SDE',
+        currentSkillLevel: 'Beginner',
+        dailyStudyTimeMinutes: 60,
+        learningGoals: [],
+        isOnboarded: true,
+      );
+      final u2 = UserModel(
+        id: '123',
+        name: 'Alex',
+        email: 'alex@dev.com',
+        targetRole: 'SDE',
+        currentSkillLevel: 'Beginner',
+        dailyStudyTimeMinutes: 60,
+        learningGoals: [],
+        isOnboarded: true,
+      );
+      expect(u1, equals(u2));
+      expect(u1.hashCode, equals(u2.hashCode));
+    });
+  });
   group('UserModel Tests', () {
     test('UserModel should parse correctly from JSON', () {
       final json = {

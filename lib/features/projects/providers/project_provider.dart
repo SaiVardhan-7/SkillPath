@@ -11,6 +11,7 @@ final projectRepositoryProvider = Provider<ProjectRepository>((ref) {
 class ProjectDomainFilterNotifier extends Notifier<String> {
   @override
   String build() => 'All';
+  @override
   set state(String val) => super.state = val;
   void set(String val) => state = val;
 }
@@ -18,6 +19,7 @@ class ProjectDomainFilterNotifier extends Notifier<String> {
 class ProjectDifficultyFilterNotifier extends Notifier<String> {
   @override
   String build() => 'All';
+  @override
   set state(String val) => super.state = val;
   void set(String val) => state = val;
 }

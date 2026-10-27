@@ -12,6 +12,7 @@ final dsaRepositoryProvider = Provider<DSARepository>((ref) {
 class DSATopicFilterNotifier extends Notifier<String> {
   @override
   String build() => 'All';
+  @override
   set state(String val) => super.state = val;
   void set(String val) => state = val;
 }
@@ -19,6 +20,7 @@ class DSATopicFilterNotifier extends Notifier<String> {
 class DSADifficultyFilterNotifier extends Notifier<String> {
   @override
   String build() => 'All';
+  @override
   set state(String val) => super.state = val;
   void set(String val) => state = val;
 }
@@ -26,6 +28,7 @@ class DSADifficultyFilterNotifier extends Notifier<String> {
 class DSAStatusFilterNotifier extends Notifier<String> {
   @override
   String build() => 'All';
+  @override
   set state(String val) => super.state = val;
   void set(String val) => state = val;
 }
@@ -33,6 +36,7 @@ class DSAStatusFilterNotifier extends Notifier<String> {
 class DSASearchQueryNotifier extends Notifier<String> {
   @override
   String build() => '';
+  @override
   set state(String val) => super.state = val;
   void set(String val) => state = val;
 }
@@ -40,6 +44,7 @@ class DSASearchQueryNotifier extends Notifier<String> {
 class DSABookmarkedFilterNotifier extends Notifier<bool> {
   @override
   bool build() => false;
+  @override
   set state(bool val) => super.state = val;
   void toggle() => state = !state;
 }

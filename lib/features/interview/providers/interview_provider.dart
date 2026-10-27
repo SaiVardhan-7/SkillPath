@@ -11,6 +11,7 @@ final interviewRepositoryProvider = Provider<InterviewRepository>((ref) {
 class InterviewCategoryFilterNotifier extends Notifier<String> {
   @override
   String build() => 'All';
+  @override
   set state(String val) => super.state = val;
   void set(String val) => state = val;
 }

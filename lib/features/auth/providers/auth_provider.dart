@@ -46,6 +46,18 @@ class AuthState {
       errorMessage: errorMessage,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is AuthState &&
+        other.status == status &&
+        other.user == user &&
+        other.errorMessage == errorMessage;
+  }
+
+  @override
+  int get hashCode => Object.hash(status, user, errorMessage);
 }
 
 class AuthNotifier extends Notifier<AuthState> {
@@ -57,6 +69,10 @@ class AuthNotifier extends Notifier<AuthState> {
     return const AuthState();
   }
 
+  void setUnauthenticated() {
+    state = state.copyWith(status: AuthStatus.unauthenticated);
+  }
+
   Future<void> checkAuth() async {
     final token = await _tokenStorage.getAccessToken();
     if (token == null || token.isEmpty) {
@@ -65,7 +81,7 @@ class AuthNotifier extends Notifier<AuthState> {
     }
 
     try {
-      final user = await _repository.getMe();
+      final user = await _repository.getMe().timeout(const Duration(seconds: 8));
       state = state.copyWith(status: AuthStatus.authenticated, user: user);
     } catch (_) {
       await _tokenStorage.clearTokens();

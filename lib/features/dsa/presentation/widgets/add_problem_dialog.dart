@@ -26,7 +26,7 @@ class _AddProblemDialogState extends ConsumerState<AddProblemDialog> {
   String _selectedTopic = 'Arrays';
   String _selectedDifficulty = 'Easy';
   String _status = 'solved';
-  int _revisionDays = 3;
+  final int _revisionDays = 3;
   bool _isLoading = false;
 
   @override
@@ -142,7 +142,7 @@ class _AddProblemDialogState extends ConsumerState<AddProblemDialog> {
                             const Text('Platform', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
                             const SizedBox(height: 4),
                             DropdownButtonFormField<String>(
-                              value: _selectedPlatform,
+                              initialValue: _selectedPlatform,
                               isExpanded: true,
                               items: AppConstants.platforms.map((p) {
                                 return DropdownMenuItem(value: p, child: Text(p, style: const TextStyle(fontSize: 13)));
@@ -161,7 +161,7 @@ class _AddProblemDialogState extends ConsumerState<AddProblemDialog> {
                             const Text('Difficulty', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
                             const SizedBox(height: 4),
                             DropdownButtonFormField<String>(
-                              value: _selectedDifficulty,
+                              initialValue: _selectedDifficulty,
                               isExpanded: true,
                               items: AppConstants.difficulties.map((d) {
                                 return DropdownMenuItem(value: d, child: Text(d, style: const TextStyle(fontSize: 13)));
@@ -182,7 +182,7 @@ class _AddProblemDialogState extends ConsumerState<AddProblemDialog> {
                       const Text('Topic Category', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
                       const SizedBox(height: 4),
                       DropdownButtonFormField<String>(
-                        value: _selectedTopic,
+                        initialValue: _selectedTopic,
                         isExpanded: true,
                         items: AppConstants.dsaCategories.map((c) {
                           return DropdownMenuItem(value: c, child: Text(c, style: const TextStyle(fontSize: 13)));

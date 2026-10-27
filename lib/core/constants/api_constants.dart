@@ -1,16 +1,22 @@
+import 'package:flutter/foundation.dart';
+
 class ApiConstants {
   /// Backend base URL. Override at build time for deployment:
-  ///   flutter build web --dart-define=API_BASE_URL=https://your-api.onrender.com/api
-  /// Defaults to the local dev server (use http://10.0.2.2:5000/api on Android emulator).
-  static const String _baseUrl = String.fromEnvironment(
-    'API_BASE_URL',
-    defaultValue: 'http://localhost:5000/api',
-  );
+  ///   flutter build web --dart-define=API_BASE_URL=https://skillpath-aotl.onrender.com/api
+  static const String _envUrl = String.fromEnvironment('API_BASE_URL');
+  static const String _defaultProdUrl = 'https://skillpath-aotl.onrender.com/api';
+  static const String _defaultDevUrl = 'http://localhost:5000/api';
 
   static String get baseUrl {
-    final trimmed = _baseUrl.trim();
-    final url = trimmed.isNotEmpty ? trimmed : 'http://localhost:5000/api';
-    return url.endsWith('/') ? url.substring(0, url.length - 1) : url;
+    final trimmed = _envUrl.trim();
+    if (trimmed.isNotEmpty) {
+      return trimmed.endsWith('/') ? trimmed.substring(0, trimmed.length - 1) : trimmed;
+    }
+    // In release mode (web or production), default to the deployed Render backend
+    if (kReleaseMode) {
+      return _defaultProdUrl;
+    }
+    return _defaultDevUrl;
   }
 
   // Auth endpoints

@@ -9,20 +9,19 @@ class AppFailure {
 }
 
 class NetworkFailure extends AppFailure {
-  const NetworkFailure([String message = 'Unable to connect to server. Please check your connection.'])
-      : super(message);
+  const NetworkFailure([super.message = 'Unable to connect to server. Please check your connection.']);
 }
 
 class ServerFailure extends AppFailure {
   const ServerFailure([
-    String message = 'A server error occurred. Please try again later.',
+    super.message = 'A server error occurred. Please try again later.',
     int? statusCode,
-  ]) : super(message, statusCode: statusCode);
+  ]) : super(statusCode: statusCode);
 }
 
 class AuthFailure extends AppFailure {
   const AuthFailure([
-    String message = 'Authentication failed. Please log in again.',
+    super.message = 'Authentication failed. Please log in again.',
     int? statusCode,
-  ]) : super(message, statusCode: statusCode);
+  ]) : super(statusCode: statusCode);
 }

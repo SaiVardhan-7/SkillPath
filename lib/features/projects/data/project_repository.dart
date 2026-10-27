@@ -62,12 +62,12 @@ class ProjectRepository {
     final response = await apiClient.put(
       '${ApiConstants.userProjects}/$userProjectIdOrProjectId',
       data: {
-        if (milestoneId != null) 'milestoneId': milestoneId,
-        if (completed != null) 'completed': completed,
-        if (githubUrl != null) 'githubUrl': githubUrl,
-        if (liveDemoUrl != null) 'liveDemoUrl': liveDemoUrl,
-        if (notes != null) 'notes': notes,
-        if (userResumeBullets != null) 'userResumeBullets': userResumeBullets,
+        ? 'milestoneId': milestoneId,
+        ? 'completed': completed,
+        ? 'githubUrl': githubUrl,
+        ? 'liveDemoUrl': liveDemoUrl,
+        ? 'notes': notes,
+        ? 'userResumeBullets': userResumeBullets,
       },
     );
     return UserProjectModel.fromJson(response['data']);

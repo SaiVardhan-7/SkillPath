@@ -42,7 +42,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     const Text('Target Career Role', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
                     const SizedBox(height: 4),
                     DropdownButtonFormField<String>(
-                      value: selectedRole,
+                      initialValue: selectedRole,
                       isExpanded: true,
                       items: AppConstants.careerRoles.map((r) {
                         return DropdownMenuItem(value: r, child: Text(r, style: const TextStyle(fontSize: 12)));
@@ -53,7 +53,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     const Text('Current Skill Level', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
                     const SizedBox(height: 4),
                     DropdownButtonFormField<String>(
-                      value: selectedSkill,
+                      initialValue: selectedSkill,
                       isExpanded: true,
                       items: AppConstants.skillLevels.map((s) {
                         return DropdownMenuItem(value: s, child: Text(s, style: const TextStyle(fontSize: 12)));
@@ -114,9 +114,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             onPressed: () async {
               Navigator.pop(context);
               await ref.read(authNotifierProvider.notifier).logout();
-              if (mounted) {
-                context.go('/welcome');
-              }
             },
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
             child: const Text('Sign Out'),
